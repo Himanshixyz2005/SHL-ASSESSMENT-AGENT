@@ -1,0 +1,20 @@
+# Python environment
+venv/
+.venv/
+env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+catalog.json  # Agar data confidential hai ya size bada hai toh isse bhi hata sakte ho
