@@ -25,11 +25,13 @@ def chat(request: ChatRequest):
 
     response = get_agent_response(request.messages, catalog)
 
-    # Ensure evaluator always gets a URL field
+    # Normalize recommendation schema
     for rec in response.get("recommendations", []):
 
-        if "url" not in rec and "link" in rec:
+        # Always expose only "url"
+        if "link" in rec:
             rec["url"] = rec["link"]
+            del rec["link"]
 
         rec.setdefault("url", "")
         rec.setdefault("name", "")

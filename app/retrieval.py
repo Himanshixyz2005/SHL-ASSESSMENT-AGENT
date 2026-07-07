@@ -81,17 +81,25 @@ def search_tests(query, catalog, top_n=5):
         # -----------------------------
         for word in query_words:
 
-            if word in name:
-                score += 10
+    # Exact name match
+          if word == name:
+           score += 20
 
-            elif word in keys:
-                score += 6
+    # Word appears in assessment name
+          elif word in name:
+           score += 12
 
-            elif word in levels:
-                score += 5
+    # Job level
+          elif word in levels:
+            score += 8
 
-            elif word in description:
-                score += 3
+    # Assessment category
+          elif word in keys:
+            score += 6
+
+    # Description
+          elif word in description:
+            score += 4
 
         # -----------------------------
         # Remote preference
