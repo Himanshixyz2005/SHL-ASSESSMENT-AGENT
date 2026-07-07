@@ -1,9 +1,9 @@
-# Python environment
+# Python virtual environments
 venv/
 .venv/
 env/
 
-# Byte-compiled / optimized / DLL files
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
@@ -11,10 +11,25 @@ __pycache__/
 # Environment variables
 .env
 
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# VS Code
+.vscode/
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
 # OS files
 .DS_Store
 Thumbs.db
 
-# Logs and databases
+# Logs
 *.log
-catalog.json  # Agar data confidential hai ya size bada hai toh isse bhi hata sakte ho
