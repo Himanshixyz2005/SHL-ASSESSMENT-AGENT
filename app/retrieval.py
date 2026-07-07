@@ -14,7 +14,7 @@ STOPWORDS = {
 
 # Query normalization
 SYNONYMS = {
-    "developer": ["developer", "programmer", "software", "coding", "engineer"],
+    "developer": ["developer", "programmer", "software"],
     "java": ["java", "spring", "jdk"],
     "python": ["python", "django", "flask"],
     "technical": ["technical", "coding", "programming", "knowledge"],
@@ -24,7 +24,16 @@ SYNONYMS = {
     "mid": ["mid", "mid-level", "professional"],
     "senior": ["senior", "lead", "manager"]
 }
-
+TECH_BOOST = {
+    "java": ["java"],
+    "python": ["python"],
+    "sql": ["sql", "database"],
+    "linux": ["linux", "unix"],
+    "c++": ["c++"],
+    "c#": ["c#"],
+    ".net": [".net", "asp.net"],
+    "javascript": ["javascript", "node", "react"],
+}
 
 def load_catalog(file_path="data/catalog.json"):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -76,6 +85,19 @@ def search_tests(query, catalog, top_n=5):
 
         searchable = f"{name} {description} {keys} {levels}"
 
+                # ----------------------------------
+        # Strong boost for exact technology
+        # ----------------------------------
+        for tech, aliases in TECH_BOOST.items():
+
+            if tech in query_lower:
+
+                if any(alias in name for alias in aliases):
+                    score += 40
+
+                elif any(alias in description for alias in aliases):
+                    score += 20
+
         # -----------------------------
         # Weighted keyword scoring
         # -----------------------------
@@ -100,7 +122,13 @@ def search_tests(query, catalog, top_n=5):
     # Description
           elif word in description:
             score += 4
+        # Mid-professional preference
+        if "mid" in query_lower and "mid-professional" in levels:
+            score += 10
 
+        # Entry-level preference
+        if "entry" in query_lower and "entry-level" in levels:
+            score += 10
         # -----------------------------
         # Remote preference
         # -----------------------------
