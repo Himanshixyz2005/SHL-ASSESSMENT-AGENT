@@ -82,7 +82,12 @@ def search_tests(query, catalog, top_n=5):
         description = item.get("description", "").lower()
         keys = " ".join(item.get("keys", [])).lower()
         levels = " ".join(item.get("job_levels", [])).lower()
-
+        
+          # -----------------------------
+        # Prevent Java and JavaScript confusion
+        # -----------------------------
+        if "java" in query_lower and "javascript" in name:
+            score -= 15
         searchable = f"{name} {description} {keys} {levels}"
 
                 # ----------------------------------
